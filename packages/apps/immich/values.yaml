@@ -8,6 +8,9 @@ host: ""
 ## @param {string} [ingressClass] - IngressClass name (defaults to tenant ingress class / namespace).
 ingressClass: ""
 
+## @param {bool} ingressTls - Enable TLS configuration for ingress.
+ingressTls: true
+
 ## @param {quantity} size - Persistent Volume Claim size for application data.
 size: 10Gi
 

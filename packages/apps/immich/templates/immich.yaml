@@ -22,6 +22,7 @@
 {{- if eq $solver "http01" }}
   {{- $_ := set $defaultIngressAnnotations "acme.cert-manager.io/http01-ingress-ingressclassname" $ingressClass }}
 {{- end }}
+{{- $ingressTlsEnabled := .Values.ingressTls | default true }}
 
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -62,6 +63,14 @@ spec:
                 - path: /
                   service:
                     identifier: main
+          tls:
+            {{- if and $ingressTlsEnabled (ne $ingressHost "") }}
+            - secretName: {{ printf "%s-tls" .Release.Name }}
+              hosts:
+                - {{ $ingressHost | quote }}
+            {{- else }}
+            []
+            {{- end }}
     controllers:
       main:
         containers:

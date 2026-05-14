@@ -65,6 +65,11 @@
       "type": "string",
       "default": ""
     },
+    "ingressTls": {
+      "description": "Enable TLS configuration for ingress.",
+      "type": "boolean",
+      "default": true
+    },
     "redis": {
       "description": "Redis configuration.",
       "type": "object",
