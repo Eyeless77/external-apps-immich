@@ -54,6 +54,11 @@
       "type": "string",
       "default": ""
     },
+    "ingressClass": {
+      "description": "IngressClass name (defaults to tenant ingress class / namespace).",
+      "type": "string",
+      "default": ""
+    },
     "redis": {
       "description": "Redis configuration.",
       "type": "object",

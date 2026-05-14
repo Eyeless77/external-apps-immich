@@ -5,6 +5,9 @@
 ## @param {string} [host] - Hostname for external access.
 host: ""
 
+## @param {string} [ingressClass] - IngressClass name (defaults to tenant ingress class / namespace).
+ingressClass: ""
+
 ## @param {quantity} size - Persistent Volume Claim size for application data.
 size: 10Gi
 

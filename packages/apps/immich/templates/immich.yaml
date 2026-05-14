@@ -1,3 +1,28 @@
+{{- $ns := index .Values "_namespace" | default dict }}
+{{- $tenantHost := index $ns "host" | default "" }}
+{{- $tenantIngress := index $ns "ingress" | default .Release.Namespace }}
+{{- $defaultHost := "" }}
+{{- if $tenantHost }}
+{{- $defaultHost = printf "%s.%s" .Release.Name $tenantHost }}
+{{- end }}
+{{- $inputHost := .Values.host | default "" }}
+{{- $ingressHost := $defaultHost }}
+{{- if $inputHost }}
+  {{- if and $tenantHost (not (contains "." $inputHost)) }}
+    {{- $ingressHost = printf "%s.%s" $inputHost $tenantHost }}
+  {{- else }}
+    {{- $ingressHost = $inputHost }}
+  {{- end }}
+{{- end }}
+{{- $ingressClass := .Values.ingressClass | default $tenantIngress }}
+{{- $cluster := index .Values "_cluster" | default dict }}
+{{- $solver := index $cluster "solver" | default "http01" }}
+{{- $clusterIssuer := index $cluster "issuer-name" | default "letsencrypt-prod" }}
+{{- $defaultIngressAnnotations := dict "nginx.ingress.kubernetes.io/ssl-redirect" "true" "cert-manager.io/cluster-issuer" $clusterIssuer }}
+{{- if eq $solver "http01" }}
+  {{- $_ := set $defaultIngressAnnotations "acme.cert-manager.io/http01-ingress-ingressclassname" $ingressClass }}
+{{- end }}
+
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -27,9 +52,12 @@ spec:
     server:
       ingress:
         main:
-          enabled: {{ ne .Values.host "" }}
+          enabled: {{ ne $ingressHost "" }}
+          className: {{ $ingressClass | quote }}
+          annotations:
+{{ toYaml $defaultIngressAnnotations | indent 12 }}
           hosts:
-            - host: {{ .Values.host | quote }}
+            - host: {{ $ingressHost | quote }}
               paths:
                 - path: /
                   service:

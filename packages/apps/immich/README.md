@@ -4,11 +4,12 @@
 
 ### Common parameters
 
-| Name           | Description                                        | Type       | Value  |
-| -------------- | -------------------------------------------------- | ---------- | ------ |
-| `host`         | Hostname for external access.                      | `string`   | `""`   |
-| `size`         | Persistent Volume Claim size for application data. | `quantity` | `10Gi` |
-| `storageClass` | StorageClass used to store the data.               | `string`   | `""`   |
+| Name           | Description                                                       | Type       | Value  |
+| -------------- | ----------------------------------------------------------------- | ---------- | ------ |
+| `host`         | Hostname for external access.                                     | `string`   | `""`   |
+| `ingressClass` | IngressClass name (defaults to tenant ingress class / namespace). | `string`   | `""`   |
+| `size`         | Persistent Volume Claim size for application data.                | `quantity` | `10Gi` |
+| `storageClass` | StorageClass used to store the data.                              | `string`   | `""`   |
 
 
 ### Database configuration
