@@ -20,6 +20,10 @@ spec:
   values:
     valkey:
       enabled: false
+    immich:
+      persistence:
+        library:
+          existingClaim: {{ printf "%s-library" .Release.Name }}
     server:
       ingress:
         main:
