@@ -33,7 +33,12 @@ spec:
             - /bin/sh
             - -ec
             - |
-              until psql -v ON_ERROR_STOP=1 -c 'CREATE EXTENSION IF NOT EXISTS vector CASCADE;'; do
+              until psql -v ON_ERROR_STOP=1 <<'SQL'
+              CREATE EXTENSION IF NOT EXISTS vector CASCADE;
+              CREATE EXTENSION IF NOT EXISTS cube CASCADE;
+              CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE;
+              SQL
+              do
                 echo "waiting for postgres superuser access..."
                 sleep 5
               done
