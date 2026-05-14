@@ -44,6 +44,12 @@ spec:
       - - spec
         - image
       - - spec
+        - image
+        - serverTag
+      - - spec
+        - image
+        - machineLearningTag
+      - - spec
         - database
       - - spec
         - redis
