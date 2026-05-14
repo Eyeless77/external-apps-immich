@@ -75,12 +75,25 @@ spec:
       main:
         containers:
           main:
+            {{- with .Values.image.serverTag }}
+            image:
+              tag: {{ . | quote }}
+            {{- end }}
             env:
               DB_HOSTNAME: postgres-{{ .Release.Name }}-db-rw
               DB_PORT: 5432
               DB_USERNAME: {{ .Values.database.user }}
               DB_DATABASE_NAME: {{ .Values.database.name }}
               REDIS_HOSTNAME: rfrm-redis-{{ .Release.Name }}-redis
+    {{- with .Values.image.machineLearningTag }}
+    machine-learning:
+      controllers:
+        main:
+          containers:
+            main:
+              image:
+                tag: {{ . | quote }}
+    {{- end }}
   valuesFrom:
     - kind: Secret
       name: postgres-{{ .Release.Name }}-db-credentials

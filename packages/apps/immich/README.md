@@ -4,13 +4,16 @@
 
 ### Common parameters
 
-| Name           | Description                                                       | Type       | Value  |
-| -------------- | ----------------------------------------------------------------- | ---------- | ------ |
-| `host`         | Hostname for external access.                                     | `string`   | `""`   |
-| `ingressClass` | IngressClass name (defaults to tenant ingress class / namespace). | `string`   | `""`   |
-| `ingressTls`   | Enable TLS configuration for ingress.                             | `bool`     | `true` |
-| `size`         | Persistent Volume Claim size for application data.                | `quantity` | `10Gi` |
-| `storageClass` | StorageClass used to store the data.                              | `string`   | `""`   |
+| Name                       | Description                                                                  | Type       | Value  |
+| -------------------------- | ---------------------------------------------------------------------------- | ---------- | ------ |
+| `host`                     | Hostname for external access.                                                | `string`   | `""`   |
+| `ingressClass`             | IngressClass name (defaults to tenant ingress class / namespace).            | `string`   | `""`   |
+| `ingressTls`               | Enable TLS configuration for ingress.                                        | `bool`     | `true` |
+| `image`                    | Image tag overrides.                                                         | `object`   | `{}`   |
+| `image.serverTag`          | Override for server image tag (empty uses upstream chart default).           | `string`   | `""`   |
+| `image.machineLearningTag` | Override for machine-learning image tag (empty uses upstream chart default). | `string`   | `""`   |
+| `size`                     | Persistent Volume Claim size for application data.                           | `quantity` | `10Gi` |
+| `storageClass`             | StorageClass used to store the data.                                         | `string`   | `""`   |
 
 
 ### Database configuration

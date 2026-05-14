@@ -11,6 +11,15 @@ ingressClass: ""
 ## @param {bool} ingressTls - Enable TLS configuration for ingress.
 ingressTls: true
 
+## @typedef {struct} Image - Immich image tag overrides.
+## @field {string} [serverTag] - Override for server image tag (empty uses upstream chart default).
+## @field {string} [machineLearningTag] - Override for machine-learning image tag (empty uses upstream chart default).
+
+## @param {Image} image - Image tag overrides.
+image:
+  serverTag: ""
+  machineLearningTag: ""
+
 ## @param {quantity} size - Persistent Volume Claim size for application data.
 size: 10Gi
 

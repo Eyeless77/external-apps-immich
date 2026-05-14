@@ -60,6 +60,23 @@
       "type": "string",
       "default": ""
     },
+    "image": {
+      "description": "Image tag overrides.",
+      "type": "object",
+      "default": {},
+      "properties": {
+        "machineLearningTag": {
+          "description": "Override for machine-learning image tag (empty uses upstream chart default).",
+          "type": "string",
+          "default": ""
+        },
+        "serverTag": {
+          "description": "Override for server image tag (empty uses upstream chart default).",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
     "ingressClass": {
       "description": "IngressClass name (defaults to tenant ingress class / namespace).",
       "type": "string",
