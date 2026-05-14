@@ -1,0 +1,12 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
+metadata:
+  name: external-apps-immich
+  namespace: cozy-public
+spec:
+  interval: 5m
+  chart: ./packages/apps/immich
+  sourceRef:
+    kind: GitRepository
+    name: external-apps
+  reconcileStrategy: Revision

@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: immich
+      version: 0.11.1
+      sourceRef:
+        kind: HelmRepository
+        name: immich
+        namespace: external-immich
+  dependsOn:
+    - name: postgres-{{ .Release.Name }}-db
+      namespace: {{ .Release.Namespace }}
+    - name: redis-{{ .Release.Name }}-redis
+      namespace: {{ .Release.Namespace }}
+  values:
+    valkey:
+      enabled: false
+    server:
+      ingress:
+        main:
+          enabled: {{ ne .Values.host "" }}
+          hosts:
+            - host: {{ .Values.host | quote }}
+              paths:
+                - path: /
+                  service:
+                    identifier: main
+    controllers:
+      main:
+        containers:
+          main:
+            env:
+              DB_HOSTNAME: postgres-{{ .Release.Name }}-db-rw
+              DB_PORT: 5432
+              DB_USERNAME: {{ .Values.database.user }}
+              DB_DATABASE_NAME: {{ .Values.database.name }}
+              REDIS_HOSTNAME: rfrm-redis-{{ .Release.Name }}-redis
+  valuesFrom:
+    - kind: Secret
+      name: postgres-{{ .Release.Name }}-db-credentials
+      valuesKey: {{ .Values.database.user }}
+      targetPath: controllers.main.containers.main.env.DB_PASSWORD
+    - kind: Secret
+      name: redis-{{ .Release.Name }}-redis-auth
+      valuesKey: password
+      targetPath: controllers.main.containers.main.env.REDIS_PASSWORD

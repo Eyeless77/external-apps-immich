@@ -1,0 +1,7 @@
+apiVersion: v2
+name: immich
+description: A Helm chart for Immich on Cozystack
+type: application
+version: 0.0.1
+appVersion: "2.6.3"
+icon: /logos/immich.svg

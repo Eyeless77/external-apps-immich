@@ -1,0 +1,44 @@
+##
+## @section Common parameters
+##
+
+## @param {string} [host] - Hostname for external access.
+host: ""
+
+## @param {quantity} size - Persistent Volume Claim size for application data.
+size: 10Gi
+
+## @param {string} storageClass - StorageClass used to store the data.
+storageClass: ""
+
+##
+## @section Database configuration
+##
+
+## @typedef {struct} Database - PostgreSQL configuration (managed via the cozystack `Postgres` sibling CR).
+## @field {quantity} size - Persistent Volume size for database storage.
+## @field {int} replicas - Number of database instances.
+## @field {string} user - Database user to create.
+## @field {string} name - Database name to create.
+## @field {string} [password] - Optional password. When empty, the cozystack postgres chart generates and preserves one via lookup.
+
+## @param {Database} database - PostgreSQL configuration.
+database:
+  size: 10Gi
+  replicas: 2
+  user: immich
+  name: immich
+  password: ""
+
+##
+## @section Redis configuration
+##
+
+## @typedef {struct} Redis - Redis configuration (managed via the cozystack `Redis` sibling CR).
+## @field {quantity} size - Persistent Volume size for redis storage.
+## @field {int} replicas - Number of redis replicas.
+
+## @param {Redis} redis - Redis configuration.
+redis:
+  size: 1Gi
+  replicas: 2

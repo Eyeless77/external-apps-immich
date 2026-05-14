@@ -1,0 +1,43 @@
+apiVersion: cozystack.io/v1alpha1
+kind: ApplicationDefinition
+metadata:
+  name: immich
+spec:
+  application:
+    kind: Immich
+    plural: immiches
+    singular: immich
+    openAPISchema: '{"title":"Chart Values","type":"object","properties":{"database":{"description":"PostgreSQL configuration.","type":"object","default":{},"required":["name","replicas","size","user"],"properties":{"name":{"description":"Database name to create.","type":"string","default":"immich"},"password":{"description":"Optional password. When empty, the cozystack postgres chart generates and preserves one via lookup.","type":"string","default":""},"replicas":{"description":"Number of database instances.","type":"integer","default":2},"size":{"description":"Persistent Volume size for database storage.","default":"10Gi","pattern":"^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$","anyOf":[{"type":"integer"},{"type":"string"}],"x-kubernetes-int-or-string":true},"user":{"description":"Database user to create.","type":"string","default":"immich"}}},"host":{"description":"Hostname for external access.","type":"string","default":""},"redis":{"description":"Redis configuration.","type":"object","default":{},"required":["replicas","size"],"properties":{"replicas":{"description":"Number of redis replicas.","type":"integer","default":2},"size":{"description":"Persistent Volume size for redis storage.","default":"1Gi","pattern":"^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$","anyOf":[{"type":"integer"},{"type":"string"}],"x-kubernetes-int-or-string":true}}},"size":{"description":"Persistent Volume Claim size for application data.","default":"10Gi","pattern":"^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$","anyOf":[{"type":"integer"},{"type":"string"}],"x-kubernetes-int-or-string":true},"storageClass":{"description":"StorageClass used to store the data.","type":"string","default":""}}}'
+  release:
+    chartRef:
+      kind: HelmChart
+      name: external-apps-immich
+      namespace: cozy-public
+    labels:
+      cozystack.io/ui: "true"
+    prefix: immich-
+  dashboard:
+    category: Media
+    singular: Immich
+    plural: Immichs
+    description: Self-hosted photo and video management solution
+    tags:
+      - photo
+      - video
+    icon: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4IiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCI+CiAgPHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIHJ4PSIyNCIgZmlsbD0iIzBiMWYyYSIvPgogIDxjaXJjbGUgY3g9IjY0IiBjeT0iNjQiIHI9IjM0IiBmaWxsPSIjNDhiNWZmIi8+CiAgPHBhdGggZD0iTTY0IDM0YTMwIDMwIDAgMCAxIDAgNjAgMzAgMzAgMCAwIDEgMC02MHoiIGZpbGw9IiM5ZWUxZmYiLz4KPC9zdmc+Cg==
+    keysOrder:
+      - - apiVersion
+      - - kind
+      - - metadata
+      - - metadata
+        - name
+      - - spec
+        - host
+      - - spec
+        - size
+      - - spec
+        - storageClass
+      - - spec
+        - database
+      - - spec
+        - redis
