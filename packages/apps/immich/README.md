@@ -14,14 +14,15 @@
 
 ### Database configuration
 
-| Name                | Description                                                                                         | Type       | Value    |
-| ------------------- | --------------------------------------------------------------------------------------------------- | ---------- | -------- |
-| `database`          | PostgreSQL configuration.                                                                           | `object`   | `{}`     |
-| `database.size`     | Persistent Volume size for database storage.                                                        | `quantity` | `10Gi`   |
-| `database.replicas` | Number of database instances.                                                                       | `int`      | `2`      |
-| `database.user`     | Database user to create.                                                                            | `string`   | `immich` |
-| `database.name`     | Database name to create.                                                                            | `string`   | `immich` |
-| `database.password` | Optional password. When empty, the cozystack postgres chart generates and preserves one via lookup. | `string`   | `""`     |
+| Name                       | Description                                                                                         | Type       | Value    |
+| -------------------------- | --------------------------------------------------------------------------------------------------- | ---------- | -------- |
+| `database`                 | PostgreSQL configuration.                                                                           | `object`   | `{}`     |
+| `database.size`            | Persistent Volume size for database storage.                                                        | `quantity` | `10Gi`   |
+| `database.replicas`        | Number of database instances.                                                                       | `int`      | `2`      |
+| `database.user`            | Database user to create.                                                                            | `string`   | `immich` |
+| `database.name`            | Database name to create.                                                                            | `string`   | `immich` |
+| `database.password`        | Optional password. When empty, the cozystack postgres chart generates and preserves one via lookup. | `string`   | `""`     |
+| `database.resourcesPreset` | Postgres sizing preset (`nano`..`2xlarge`).                                                         | `string`   | `medium` |
 
 
 ### Redis configuration

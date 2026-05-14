@@ -24,11 +24,13 @@ storageClass: ""
 ## @field {string} user - Database user to create.
 ## @field {string} name - Database name to create.
 ## @field {string} [password] - Optional password. When empty, the cozystack postgres chart generates and preserves one via lookup.
+## @field {string} resourcesPreset - Postgres sizing preset (`nano`..`2xlarge`).
 
 ## @param {Database} database - PostgreSQL configuration.
 database:
   size: 10Gi
   replicas: 2
+  resourcesPreset: medium
   user: immich
   name: immich
   password: ""

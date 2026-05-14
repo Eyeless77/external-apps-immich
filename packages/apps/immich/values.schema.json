@@ -9,6 +9,7 @@
       "required": [
         "name",
         "replicas",
+        "resourcesPreset",
         "size",
         "user"
       ],
@@ -27,6 +28,11 @@
           "description": "Number of database instances.",
           "type": "integer",
           "default": 2
+        },
+        "resourcesPreset": {
+          "description": "Postgres sizing preset (`nano`..`2xlarge`).",
+          "type": "string",
+          "default": "medium"
         },
         "size": {
           "description": "Persistent Volume size for database storage.",
