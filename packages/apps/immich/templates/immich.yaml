@@ -73,6 +73,39 @@ spec:
             {{- end }}
     controllers:
       main:
+        initContainers:
+          init-pgvector:
+            image:
+              repository: docker.io/library/postgres
+              tag: "17"
+              pullPolicy: IfNotPresent
+            env:
+              PGHOST: postgres-{{ .Release.Name }}-db-rw
+              PGPORT: 5432
+              PGDATABASE: {{ .Values.database.name | quote }}
+              PGUSER:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-{{ .Release.Name }}-db-superuser
+                    key: username
+              PGPASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-{{ .Release.Name }}-db-superuser
+                    key: password
+            command:
+              - /bin/sh
+              - -ec
+              - |
+                until psql -v ON_ERROR_STOP=1 <<'SQL'
+                CREATE EXTENSION IF NOT EXISTS vector CASCADE;
+                CREATE EXTENSION IF NOT EXISTS cube CASCADE;
+                CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE;
+                SQL
+                do
+                  echo "waiting for postgres superuser access..."
+                  sleep 5
+                done
         containers:
           main:
             {{- with .Values.image.serverTag }}
