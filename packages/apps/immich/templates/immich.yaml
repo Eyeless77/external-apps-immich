@@ -117,7 +117,17 @@ spec:
               DB_PORT: 5432
               DB_USERNAME: {{ .Values.database.user }}
               DB_DATABASE_NAME: {{ .Values.database.name }}
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-{{ .Release.Name }}-db-credentials
+                    key: {{ .Values.database.user }}
               REDIS_HOSTNAME: rfrm-redis-{{ .Release.Name }}-redis
+              REDIS_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: redis-{{ .Release.Name }}-redis-auth
+                    key: password
     {{- with .Values.image.machineLearningTag }}
     machine-learning:
       controllers:
@@ -127,12 +137,3 @@ spec:
               image:
                 tag: {{ . | quote }}
     {{- end }}
-  valuesFrom:
-    - kind: Secret
-      name: postgres-{{ .Release.Name }}-db-credentials
-      valuesKey: {{ .Values.database.user }}
-      targetPath: controllers.main.containers.main.env.DB_PASSWORD
-    - kind: Secret
-      name: redis-{{ .Release.Name }}-redis-auth
-      valuesKey: password
-      targetPath: controllers.main.containers.main.env.REDIS_PASSWORD
